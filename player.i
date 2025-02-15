@@ -939,7 +939,7 @@ void resetGame() {
 
 void updatePlayer() {
 
-    drawRectangle(player.x, player.y, player.width, player.height, (((10) & 31) | ((10) & 31) << 5 | ((20) & 31) << 10));
+    drawRectangle(player.x, player.y - 9, player.width + 3, player.height + 9, (((10) & 31) | ((10) & 31) << 5 | ((20) & 31) << 10));
 
 
     if (moveCounter % 1 == 0) {
@@ -963,5 +963,38 @@ void updatePlayer() {
 
 
 void drawPlayer() {
-    drawRectangle(player.x, player.y, player.width, player.height, player.color);
+
+    (videoBuffer[((player.y) * (240) + (player.x))] = (((0) & 31) | ((0) & 31) << 5 | ((0) & 31) << 10));
+    (videoBuffer[((player.y) * (240) + (player.x + 2))] = (((0) & 31) | ((0) & 31) << 5 | ((0) & 31) << 10));
+    (videoBuffer[((player.y - 1) * (240) + (player.x + 2))] = (((25) & 31) | ((22) & 31) << 5 | ((17) & 31) << 10));
+    (videoBuffer[((player.y - 1) * (240) + (player.x + 1))] = (((25) & 31) | ((22) & 31) << 5 | ((17) & 31) << 10));
+
+    (videoBuffer[((player.y - 2) * (240) + (player.x))] = (((0) & 31) | ((0) & 31) << 5 | ((31) & 31) << 10));
+    (videoBuffer[((player.y - 2) * (240) + (player.x + 1))] = (((0) & 31) | ((0) & 31) << 5 | ((31) & 31) << 10));
+    (videoBuffer[((player.y - 2) * (240) + (player.x + 2))] = (((0) & 31) | ((0) & 31) << 5 | ((31) & 31) << 10));
+
+    (videoBuffer[((player.y - 3) * (240) + (player.x))] = (((31) & 31) | ((31) & 31) << 5 | ((0) & 31) << 10));
+    (videoBuffer[((player.y - 4) * (240) + (player.x))] = (((31) & 31) | ((31) & 31) << 5 | ((0) & 31) << 10));
+    (videoBuffer[((player.y - 5) * (240) + (player.x))] = (((31) & 31) | ((31) & 31) << 5 | ((0) & 31) << 10));
+    (videoBuffer[((player.y - 6) * (240) + (player.x))] = (((31) & 31) | ((31) & 31) << 5 | ((0) & 31) << 10));
+    (videoBuffer[((player.y - 7) * (240) + (player.x))] = (((31) & 31) | ((31) & 31) << 5 | ((0) & 31) << 10));
+    (videoBuffer[((player.y - 8) * (240) + (player.x))] = (((31) & 31) | ((31) & 31) << 5 | ((0) & 31) << 10));
+    (videoBuffer[((player.y - 9) * (240) + (player.x))] = (((31) & 31) | ((31) & 31) << 5 | ((0) & 31) << 10));
+
+
+    (videoBuffer[((player.y - 3) * (240) + (player.x + 1))] = (((23) & 31) | ((20) & 31) << 5 | ((15) & 31) << 10));
+    (videoBuffer[((player.y - 4) * (240) + (player.x + 1))] = (((23) & 31) | ((20) & 31) << 5 | ((15) & 31) << 10));
+    (videoBuffer[((player.y - 5) * (240) + (player.x + 1))] = (((31) & 31) | ((31) & 31) << 5 | ((0) & 31) << 10));
+    (videoBuffer[((player.y - 6) * (240) + (player.x + 1))] = (((31) & 31) | ((31) & 31) << 5 | ((0) & 31) << 10));
+    (videoBuffer[((player.y - 7) * (240) + (player.x + 1))] = (((23) & 31) | ((20) & 31) << 5 | ((15) & 31) << 10));
+    (videoBuffer[((player.y - 8) * (240) + (player.x + 1))] = (((31) & 31) | ((31) & 31) << 5 | ((0) & 31) << 10));
+    (videoBuffer[((player.y - 9) * (240) + (player.x + 1))] = (((31) & 31) | ((31) & 31) << 5 | ((0) & 31) << 10));
+
+    (videoBuffer[((player.y - 3) * (240) + (player.x + 2))] = (((23) & 31) | ((20) & 31) << 5 | ((15) & 31) << 10));
+    (videoBuffer[((player.y - 4) * (240) + (player.x + 2))] = (((23) & 31) | ((20) & 31) << 5 | ((15) & 31) << 10));
+    (videoBuffer[((player.y - 5) * (240) + (player.x + 2))] = (((31) & 31) | ((31) & 31) << 5 | ((0) & 31) << 10));
+    (videoBuffer[((player.y - 6) * (240) + (player.x + 2))] = (((31) & 31) | ((31) & 31) << 5 | ((0) & 31) << 10));
+    (videoBuffer[((player.y - 7) * (240) + (player.x + 2))] = (((23) & 31) | ((20) & 31) << 5 | ((15) & 31) << 10));
+    (videoBuffer[((player.y - 8) * (240) + (player.x + 2))] = (((23) & 31) | ((20) & 31) << 5 | ((15) & 31) << 10));
+    (videoBuffer[((player.y - 9) * (240) + (player.x + 2))] = (((31) & 31) | ((31) & 31) << 5 | ((0) & 31) << 10));
 }

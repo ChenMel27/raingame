@@ -157,7 +157,6 @@ main:
 	strh	r3, [r2]	@ movhi
 	ldr	r3, .L35+32
 	ldrh	r3, [r3, #48]
-	mvn	r3, r3
 	strh	r3, [r8]	@ movhi
 	ldr	r3, .L35+36
 	mov	lr, pc
@@ -171,15 +170,18 @@ main:
 	ldr	r3, .L35+48
 	mov	lr, pc
 	bx	r3
-	ldr	r0, [r5, #12]
-	ldr	r1, [r5, #8]
-	ldr	r2, [r5, #4]
+	add	r0, r5, #8
+	ldm	r0, {r0, ip}
+	ldr	r1, [r5, #4]
 	ldr	r3, [r5]
-	str	r0, [sp, #12]
-	str	r1, [sp, #8]
-	str	r2, [sp, #4]
+	ldr	r2, [r4, #8]
+	str	r0, [sp, #8]
+	str	r1, [sp, #4]
 	str	r3, [sp]
-	ldm	r4, {r0, r1, r2, r3}
+	str	ip, [sp, #12]
+	ldr	r3, [r4, #12]
+	ldm	r4, {r0, r1}
+	add	r2, r2, #2
 	mov	lr, pc
 	bx	fp
 	cmp	r0, #0
@@ -204,14 +206,16 @@ main:
 	add	r7, r7, #1
 	beq	.L17
 .L34:
-	mov	r1, #2
-	ldr	r2, [r6, #4]
-	ldr	r3, [r6]
-	str	r1, [sp, #12]
-	str	r1, [sp, #8]
-	str	r2, [sp, #4]
-	str	r3, [sp]
-	ldm	r4, {r0, r1, r2, r3}
+	mov	lr, #3
+	ldm	r6, {r0, ip}
+	ldmib	r4, {r1, r2, r3}
+	stm	sp, {r0, ip}
+	str	lr, [sp, #12]
+	str	lr, [sp, #8]
+	ldr	r0, [r4]
+	add	r3, r3, #11
+	add	r2, r2, #6
+	sub	r1, r1, #11
 	mov	lr, pc
 	bx	fp
 	cmp	r0, #0
@@ -291,15 +295,15 @@ main:
 	mov	r0, #8
 	mov	lr, pc
 	bx	r3
-	ldr	r3, .L35+68
+	ldr	r2, [r4, #8]
+	ldr	r3, .L35+100
+	ldm	r4, {r0, r1}
 	ldr	r7, .L35+88
 	str	r3, [sp]
-	ldm	r4, {r0, r1, r2, r3}
+	add	r2, r2, #3
+	ldr	r3, [r4, #12]
 	mov	lr, pc
 	bx	r7
-	ldr	r3, .L35+92
-	mov	lr, pc
-	bx	r3
 	ldr	r2, [r5, #8]
 	ldr	r0, [r5]
 	ldr	r3, [r5, #12]
@@ -317,6 +321,9 @@ main:
 	mov	r1, #147
 	mov	lr, pc
 	bx	r7
+	ldr	r3, .L35+92
+	mov	lr, pc
+	bx	r3
 	b	.L15
 .L36:
 	.align	2
@@ -346,6 +353,7 @@ main:
 	.word	drawRectangle
 	.word	resetGame
 	.word	increaseRainFall
+	.word	16023
 	.size	main, .-main
 	.comm	oldButtons,2,2
 	.comm	buttons,2,2

@@ -46,27 +46,129 @@ initializePlayer:
 	.type	drawPlayer, %function
 drawPlayer:
 	@ Function supports interworking.
-	@ args = 0, pretend = 0, frame = 0
+	@ args = 0, pretend = 0, frame = 8
 	@ frame_needed = 0, uses_anonymous_args = 0
-	push	{r4, lr}
-	ldr	r0, .L7
-	ldrh	r2, [r0, #28]
-	sub	sp, sp, #8
-	ldr	r3, [r0, #12]
-	str	r2, [sp]
-	ldr	r4, .L7+4
-	ldm	r0, {r0, r1, r2}
-	mov	lr, pc
-	bx	r4
-	add	sp, sp, #8
+	ldr	r3, .L7
+	push	{r4, r5, r6, r7, r8, r9, r10, fp, lr}
+	ldm	r3, {r1, r4}
+	rsb	r4, r4, r4, lsl #4
+	lsl	r2, r4, #4
+	sub	sp, sp, #12
+	sub	fp, r2, #960
+	str	fp, [sp, #4]
+	mov	fp, #0	@ movhi
+	mov	r8, #31744
+	mvn	r0, #64512
+	ldr	r3, .L7+4
+	add	lr, r1, #2
+	ldr	r3, [r3]
+	add	r10, r1, r4, lsl #4
+	add	r4, lr, r4, lsl #4
+	add	ip, r1, #1
+	sub	r7, r2, #240
+	lsl	r10, r10, #1
+	lsl	r4, r4, #1
+	strh	fp, [r3, r10]	@ movhi
+	add	r9, lr, r7
+	strh	fp, [r3, r4]	@ movhi
+	add	r7, r7, ip
+	ldr	fp, .L7+8
+	sub	r6, r2, #480
+	lsl	r9, r9, #1
+	lsl	r7, r7, #1
+	strh	fp, [r3, r9]	@ movhi
+	strh	fp, [r3, r7]	@ movhi
+	add	fp, r1, r6
+	lsl	fp, fp, #1
+	strh	r8, [r3, fp]	@ movhi
+	add	fp, ip, r6
+	lsl	fp, fp, #1
+	strh	r8, [r3, fp]	@ movhi
+	add	r6, lr, r6
+	ldr	fp, [sp, #4]
+	sub	r5, r2, #720
+	lsl	r6, r6, #1
+	strh	r8, [r3, r6]	@ movhi
+	add	r8, r1, r5
+	add	r6, r1, fp
+	sub	r10, r2, #1200
+	sub	r4, r2, #1440
+	lsl	r8, r8, #1
+	lsl	r6, r6, #1
+	strh	r0, [r3, r8]	@ movhi
+	strh	r0, [r3, r6]	@ movhi
+	add	r8, r1, r10
+	add	r6, r1, r4
+	sub	r9, r2, #1680
+	sub	r7, r2, #1920
+	lsl	r8, r8, #1
+	sub	r2, r2, #2160
+	lsl	r6, r6, #1
+	strh	r0, [r3, r8]	@ movhi
+	strh	r0, [r3, r6]	@ movhi
+	add	r8, r1, r9
+	add	r6, r1, r7
+	add	r1, r1, r2
+	lsl	r8, r8, #1
+	lsl	r6, r6, #1
+	lsl	r1, r1, #1
+	strh	r0, [r3, r8]	@ movhi
+	strh	r0, [r3, r6]	@ movhi
+	add	r8, ip, r5
+	strh	r0, [r3, r1]	@ movhi
+	ldr	r6, .L7+12
+	add	r1, ip, fp
+	lsl	r8, r8, #1
+	lsl	r1, r1, #1
+	strh	r6, [r3, r8]	@ movhi
+	strh	r6, [r3, r1]	@ movhi
+	add	r8, ip, r10
+	add	r1, ip, r4
+	lsl	r8, r8, #1
+	lsl	r1, r1, #1
+	strh	r0, [r3, r8]	@ movhi
+	add	r5, lr, r5
+	strh	r0, [r3, r1]	@ movhi
+	add	r8, ip, r9
+	add	r1, ip, r7
+	add	fp, lr, fp
+	add	r10, lr, r10
+	add	r4, lr, r4
+	add	r9, lr, r9
+	add	ip, ip, r2
+	add	r7, lr, r7
+	add	r2, lr, r2
+	lsl	r5, r5, #1
+	lsl	fp, fp, #1
+	lsl	r10, r10, #1
+	lsl	r4, r4, #1
+	lsl	r8, r8, #1
+	lsl	r9, r9, #1
+	lsl	r1, r1, #1
+	lsl	ip, ip, #1
+	lsl	r7, r7, #1
+	lsl	r2, r2, #1
+	strh	r6, [r3, r8]	@ movhi
+	strh	r0, [r3, r1]	@ movhi
+	strh	r0, [r3, ip]	@ movhi
+	strh	r6, [r3, r5]	@ movhi
+	strh	r6, [r3, fp]	@ movhi
+	strh	r0, [r3, r10]	@ movhi
+	strh	r0, [r3, r4]	@ movhi
+	strh	r6, [r3, r9]	@ movhi
+	strh	r6, [r3, r7]	@ movhi
+	strh	r0, [r3, r2]	@ movhi
+	add	sp, sp, #12
 	@ sp needed
-	pop	{r4, lr}
+	pop	{r4, r5, r6, r7, r8, r9, r10, fp, lr}
 	bx	lr
 .L8:
 	.align	2
 .L7:
 	.word	player
-	.word	drawRectangle
+	.word	videoBuffer
+	.word	18137
+	.word	16023
 	.size	drawPlayer, .-drawPlayer
 	.section	.rodata.str1.4,"aMS",%progbits,1
 	.align	2
@@ -157,12 +259,16 @@ updatePlayer:
 	@ args = 0, pretend = 0, frame = 0
 	@ frame_needed = 0, uses_anonymous_args = 0
 	push	{r4, r5, lr}
-	ldr	ip, .L18
-	ldr	r4, .L18+4
+	ldr	r4, .L18
+	ldr	ip, .L18+4
+	ldmib	r4, {r1, r2, r3}
 	sub	sp, sp, #12
-	ldm	r4, {r0, r1, r2, r3}
+	add	r3, r3, #9
+	ldr	r0, [r4]
 	str	ip, [sp]
 	ldr	r5, .L18+8
+	add	r2, r2, #3
+	sub	r1, r1, #9
 	mov	lr, pc
 	bx	r5
 	ldr	r3, .L18+12
@@ -199,8 +305,8 @@ updatePlayer:
 .L19:
 	.align	2
 .L18:
-	.word	20810
 	.word	player
+	.word	20810
 	.word	drawRectangle
 	.word	buttons
 	.word	.LANCHOR0

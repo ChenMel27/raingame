@@ -46,7 +46,7 @@ void resetGame() {
 
 void updatePlayer() {
     // Erase the previous position by drawing over it with the background color
-    drawRectangle(player.x, player.y, player.width, player.height, RGB(10, 10, 20));
+    drawRectangle(player.x, player.y - 9, player.width + 3, player.height + 9, RGB(10, 10, 20));
 
     // Only move every MOVE_DELAY frames
     if (moveCounter % MOVE_DELAY == 0) {
@@ -70,5 +70,38 @@ void updatePlayer() {
 
 // Draws the player
 void drawPlayer() {
-    drawRectangle(player.x, player.y, player.width, player.height, player.color);
+
+    setPixel(player.x, player.y, BLACK);
+    setPixel(player.x + 2, player.y, BLACK);
+    setPixel(player.x + 2, player.y - 1, RGB(25, 22, 17));
+    setPixel(player.x + 1, player.y - 1, RGB(25, 22, 17));
+
+    setPixel(player.x, player.y - 2, BLUE);
+    setPixel(player.x + 1, player.y - 2, BLUE);
+    setPixel(player.x + 2, player.y - 2, BLUE);
+    
+    setPixel(player.x, player.y - 3, YELLOW);
+    setPixel(player.x, player.y - 4, YELLOW);
+    setPixel(player.x, player.y - 5, YELLOW);
+    setPixel(player.x, player.y - 6, YELLOW);
+    setPixel(player.x, player.y - 7, YELLOW);
+    setPixel(player.x, player.y - 8, YELLOW);
+    setPixel(player.x, player.y - 9, YELLOW);
+
+
+    setPixel(player.x + 1, player.y - 3, RGB(23, 20, 15));
+    setPixel(player.x + 1, player.y - 4, RGB(23, 20, 15));
+    setPixel(player.x + 1, player.y - 5, YELLOW);
+    setPixel(player.x + 1, player.y - 6, YELLOW);
+    setPixel(player.x + 1, player.y - 7, RGB(23, 20, 15));
+    setPixel(player.x + 1, player.y - 8, YELLOW);
+    setPixel(player.x + 1, player.y - 9, YELLOW);
+
+    setPixel(player.x + 2, player.y - 3, RGB(23, 20, 15));
+    setPixel(player.x + 2, player.y - 4, RGB(23, 20, 15));
+    setPixel(player.x + 2, player.y - 5, YELLOW);
+    setPixel(player.x + 2, player.y - 6, YELLOW);
+    setPixel(player.x + 2, player.y - 7, RGB(23, 20, 15));
+    setPixel(player.x + 2, player.y - 8, RGB(23, 20, 15));
+    setPixel(player.x + 2, player.y - 9, YELLOW);
 }

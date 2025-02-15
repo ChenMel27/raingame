@@ -122,20 +122,18 @@ int main() {
 
     while (1) {
         oldButtons = buttons;
-        buttons = ~(*(volatile unsigned short *)0x04000130);
+        buttons = (*(volatile unsigned short *)0x04000130);
 
         updateGame();
         waitForVBlank();
         drawGame();
 
 
-        if (collision(player.x, player.y, player.width, player.height,
-                      endpoint.x, endpoint.y, endpoint.width, endpoint.height)) {
+        if (collision(player.x, player.y, player.width + 2, player.height, endpoint.x, endpoint.y, endpoint.width, endpoint.height)) {
 
             char oldScoreText[10];
             sprintf(oldScoreText, "Score: %d", score);
             drawString(10, 10, oldScoreText, (((10) & 31) | ((10) & 31) << 5 | ((20) & 31) << 10));
-
             score++;
             increaseRainFall();
 
@@ -143,23 +141,22 @@ int main() {
             playAnalogSound(8);
 
 
-            drawRectangle(player.x, player.y, player.width, player.height, (((10) & 31) | ((10) & 31) << 5 | ((20) & 31) << 10));
-
-            resetGame();
-
+            drawRectangle(player.x, player.y, player.width + 3, player.height, (((23) & 31) | ((20) & 31) << 5 | ((15) & 31) << 10));
 
             drawRectangle(endpoint.x - 1, endpoint.y, endpoint.width + 1, endpoint.height, (((0) & 31) | ((0) & 31) << 5 | ((0) & 31) << 10));
             drawRectangle(0, 147, 240, 13, (((5) & 31) | ((15) & 31) << 5 | ((5) & 31) << 10));
+            resetGame();
         }
 
 
         for (int i = 0; i < currentRainAmount; i++) {
-            if (rainDrops[i].active && collision(player.x, player.y, player.width, player.height,
-                                                 rainDrops[i].x, rainDrops[i].y, 2, 2)) {
+            if (rainDrops[i].active &&
+                collision(player.x, player.y - 11, player.width + 6, player.height + 11, rainDrops[i].x, rainDrops[i].y, 3, 3)) {
 
                 char oldScoreText[10];
                 sprintf(oldScoreText, "Score: %d", score);
                 drawString(10, 10, oldScoreText, (((10) & 31) | ((10) & 31) << 5 | ((20) & 31) << 10));
+
 
                 score = 0;
 
@@ -168,6 +165,7 @@ int main() {
 
                 currentRainAmount = 10;
                 initRain();
+
 
                 fillScreen((((10) & 31) | ((10) & 31) << 5 | ((20) & 31) << 10));
                 drawRectangle(0, 147, 240, 13, (((5) & 31) | ((15) & 31) << 5 | ((5) & 31) << 10));
