@@ -147,9 +147,9 @@ main:
 	bx	r3
 	ldr	r8, .L35+4
 	ldr	r4, .L35+8
-	ldr	r5, .L35+12
-	ldr	fp, .L35+16
-	ldr	r10, .L35+20
+	ldr	r6, .L35+12
+	ldr	r10, .L35+16
+	ldr	fp, .L35+20
 	ldr	r9, .L35+24
 .L20:
 	ldr	r2, .L35+28
@@ -170,10 +170,10 @@ main:
 	ldr	r3, .L35+48
 	mov	lr, pc
 	bx	r3
-	add	r0, r5, #8
+	add	r0, r6, #8
 	ldm	r0, {r0, ip}
-	ldr	r1, [r5, #4]
-	ldr	r3, [r5]
+	ldr	r1, [r6, #4]
+	ldr	r3, [r6]
 	ldr	r2, [r4, #8]
 	str	r0, [sp, #8]
 	str	r1, [sp, #4]
@@ -183,7 +183,7 @@ main:
 	ldm	r4, {r0, r1}
 	add	r2, r2, #2
 	mov	lr, pc
-	bx	fp
+	bx	r10
 	cmp	r0, #0
 	bne	.L33
 .L15:
@@ -191,52 +191,52 @@ main:
 	cmp	r3, #0
 	ble	.L20
 	mov	r7, #0
-	ldr	r6, .L35+52
-	ldr	r3, [r6, #12]
+	ldr	r5, .L35+52
+	ldr	r3, [r5, #12]
 	cmp	r3, #0
 	add	r7, r7, #1
 	bne	.L34
 .L17:
 	ldr	r3, [r9]
 	cmp	r3, r7
-	add	r6, r6, #16
+	add	r5, r5, #16
 	ble	.L20
-	ldr	r3, [r6, #12]
+	ldr	r3, [r5, #12]
 	cmp	r3, #0
 	add	r7, r7, #1
 	beq	.L17
 .L34:
 	mov	lr, #3
-	ldm	r6, {r0, ip}
 	ldmib	r4, {r1, r2, r3}
-	stm	sp, {r0, ip}
+	ldm	r5, {r0, ip}
 	str	lr, [sp, #12]
+	stm	sp, {r0, ip}
 	str	lr, [sp, #8]
 	ldr	r0, [r4]
 	add	r3, r3, #11
 	add	r2, r2, #6
 	sub	r1, r1, #11
 	mov	lr, pc
-	bx	fp
+	bx	r10
 	cmp	r0, #0
 	beq	.L17
-	ldr	r2, [r10]
+	ldr	r2, [fp]
 	ldr	r1, .L35+56
 	ldr	r3, .L35+60
 	add	r0, sp, #20
 	mov	lr, pc
 	bx	r3
 	mov	r1, #10
-	mov	r6, #0
 	ldr	ip, .L35+64
 	mov	r0, r1
 	add	r2, sp, #20
 	ldr	r3, .L35+68
 	mov	lr, pc
 	bx	ip
-	ldr	r3, .L35+72
+	mov	r3, #0
 	mov	r0, #6
-	str	r6, [r10]
+	str	r3, [fp]
+	ldr	r3, .L35+72
 	mov	lr, pc
 	bx	r3
 	mov	r3, #10
@@ -244,84 +244,35 @@ main:
 	ldr	r3, .L35+76
 	mov	lr, pc
 	bx	r3
-	ldr	r0, .L35+68
 	ldr	r3, .L35+80
-	mov	lr, pc
-	bx	r3
-	ldr	r3, .L35+84
-	mov	r0, r6
-	str	r3, [sp]
-	ldr	r7, .L35+88
-	mov	r3, #13
-	mov	r2, #240
-	mov	r1, #147
-	mov	lr, pc
-	bx	r7
-	ldr	r2, [r5, #8]
-	ldr	r0, [r5]
-	ldr	r3, [r5, #12]
-	str	r6, [sp]
-	ldr	r1, [r5, #4]
-	add	r2, r2, #1
-	sub	r0, r0, #1
-	mov	lr, pc
-	bx	r7
-	ldr	r3, .L35+92
 	mov	lr, pc
 	bx	r3
 	b	.L20
 .L33:
-	ldr	r2, [r10]
+	ldr	r2, [fp]
 	ldr	r1, .L35+56
 	ldr	r3, .L35+60
 	add	r0, sp, #20
 	mov	lr, pc
 	bx	r3
 	mov	r1, #10
-	mov	r6, #0
 	ldr	ip, .L35+64
 	mov	r0, r1
 	add	r2, sp, #20
 	ldr	r3, .L35+68
 	mov	lr, pc
 	bx	ip
-	ldr	r3, [r10]
+	ldr	r3, [fp]
 	add	r3, r3, #1
-	str	r3, [r10]
-	ldr	r3, .L35+96
+	str	r3, [fp]
+	ldr	r3, .L35+84
 	mov	lr, pc
 	bx	r3
 	ldr	r3, .L35+72
 	mov	r0, #8
 	mov	lr, pc
 	bx	r3
-	ldr	r2, [r4, #8]
-	ldr	r3, .L35+100
-	ldm	r4, {r0, r1}
-	ldr	r7, .L35+88
-	str	r3, [sp]
-	add	r2, r2, #3
-	ldr	r3, [r4, #12]
-	mov	lr, pc
-	bx	r7
-	ldr	r2, [r5, #8]
-	ldr	r0, [r5]
-	ldr	r3, [r5, #12]
-	ldr	r1, [r5, #4]
-	str	r6, [sp]
-	add	r2, r2, #1
-	sub	r0, r0, #1
-	mov	lr, pc
-	bx	r7
-	ldr	r3, .L35+84
-	mov	r0, r6
-	str	r3, [sp]
-	mov	r2, #240
-	mov	r3, #13
-	mov	r1, #147
-	mov	lr, pc
-	bx	r7
-	ldr	r3, .L35+92
+	ldr	r3, .L35+80
 	mov	lr, pc
 	bx	r3
 	b	.L15
@@ -348,12 +299,8 @@ main:
 	.word	20810
 	.word	playAnalogSound
 	.word	initRain
-	.word	fillScreen
-	.word	5605
-	.word	drawRectangle
 	.word	resetGame
 	.word	increaseRainFall
-	.word	16023
 	.size	main, .-main
 	.comm	oldButtons,2,2
 	.comm	buttons,2,2

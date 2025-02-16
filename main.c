@@ -24,30 +24,30 @@ int main() {
         waitForVBlank();
         drawGame();
 
-        // Check if player reached endpoint
+        // Collision check for player and endpoint (Score increases)
         if (collision(player.x, player.y, player.width + 2, player.height, endpoint.x, endpoint.y, endpoint.width, endpoint.height)) {
+            
             // Erase previous score before increasing
             char oldScoreText[10];
             sprintf(oldScoreText, "Score: %d", score);
             drawString(10, 10, oldScoreText, RGB(10, 10, 20));  
             score++;
+
+            // Increase difficult when score increases
             increaseRainFall();  
 
-            // Play a sound when reaching the endpoint
+            // Play a good sound when reaching the endpoint
             playAnalogSound(8);
 
-            // Erase player before resetting
-            drawRectangle(player.x, player.y, player.width + 3, player.height, RGB(23, 20, 15));
-            // Redraw endpoint and floor
-            drawRectangle(endpoint.x - 1, endpoint.y, endpoint.width + 1, endpoint.height, BLACK);
-            drawRectangle(0, 147, 240, 13, RGB(5, 15, 5));
+            // Reset and clear pixels
             resetGame();  
         }
 
-        // Check if a raindrop hit the player
+        // Collision check for player and rain (Score resets to 0)
         for (int i = 0; i < currentRainAmount; i++) {
             if (rainDrops[i].active && 
                 collision(player.x, player.y - 11, player.width + 6, player.height + 11, rainDrops[i].x, rainDrops[i].y, 3, 3)) {
+                
                 // Erase previous score before resetting
                 char oldScoreText[10];
                 sprintf(oldScoreText, "Score: %d", score);
@@ -56,17 +56,14 @@ int main() {
                 // Reset score
                 score = 0;
 
-                // Play a sound when getting hit by rain
+                // Play a bad sound when getting hit by rain
                 playAnalogSound(6);
 
+                // Reset rain back to "east"
                 currentRainAmount = 10;
                 initRain();
 
-                // Clear rain
-                fillScreen(RGB(10, 10, 20));
-                drawRectangle(0, 147, 240, 13, RGB(5, 15, 5));
-                drawRectangle(endpoint.x - 1, endpoint.y, endpoint.width + 1, endpoint.height, BLACK);
-
+                // Reset game
                 resetGame();  
 
                 break;

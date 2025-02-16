@@ -23,6 +23,9 @@ void initializePlayer() {
 void resetGame() {
     // Erase the last player position before resetting
     drawRectangle(player.x, player.y, player.width, player.height, RGB(10, 10, 20));
+    fillScreen(RGB(10, 10, 20));
+    drawRectangle(0, 147, 240, 13, RGB(5, 15, 5));
+    drawRectangle(endpoint.x - 1, endpoint.y, endpoint.width + 1, endpoint.height, BLACK);
 
     // Erase the previous score
     char oldScoreText[10];

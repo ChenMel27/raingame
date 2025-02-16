@@ -916,6 +916,9 @@ void initializePlayer() {
 void resetGame() {
 
     drawRectangle(player.x, player.y, player.width, player.height, (((10) & 31) | ((10) & 31) << 5 | ((20) & 31) << 10));
+    fillScreen((((10) & 31) | ((10) & 31) << 5 | ((20) & 31) << 10));
+    drawRectangle(0, 147, 240, 13, (((5) & 31) | ((15) & 31) << 5 | ((5) & 31) << 10));
+    drawRectangle(endpoint.x - 1, endpoint.y, endpoint.width + 1, endpoint.height, (((0) & 31) | ((0) & 31) << 5 | ((0) & 31) << 10));
 
 
     char oldScoreText[10];

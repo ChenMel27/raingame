@@ -185,19 +185,42 @@ resetGame:
 	@ Function supports interworking.
 	@ args = 0, pretend = 0, frame = 24
 	@ frame_needed = 0, uses_anonymous_args = 0
-	push	{r4, r5, r6, r7, r8, lr}
+	push	{r4, r5, r6, r7, r8, r9, lr}
+	mov	r9, #0
 	ldr	r4, .L11
 	ldr	r6, .L11+4
-	sub	sp, sp, #32
-	ldr	r5, .L11+8
-	ldr	r8, .L11+12
+	sub	sp, sp, #36
 	ldm	r4, {r0, r1, r2, r3}
+	ldr	r7, .L11+8
 	str	r6, [sp]
-	ldr	r7, .L11+16
+	mov	lr, pc
+	bx	r7
+	mov	r0, r6
+	ldr	r3, .L11+12
+	mov	lr, pc
+	bx	r3
+	ldr	r2, .L11+16
+	mov	r0, r9
+	str	r2, [sp]
+	mov	r3, #13
+	mov	r2, #240
+	mov	r1, #147
+	mov	lr, pc
+	bx	r7
+	ldr	r1, .L11+20
+	ldr	r2, [r1, #8]
+	ldr	r0, [r1]
+	ldr	r5, .L11+24
+	ldr	r8, .L11+28
+	ldr	r3, [r1, #12]
+	add	r2, r2, #1
+	ldr	r1, [r1, #4]
+	sub	r0, r0, #1
+	str	r9, [sp]
 	mov	lr, pc
 	bx	r7
 	mov	r1, r8
-	ldr	r7, .L11+20
+	ldr	r7, .L11+32
 	ldr	r2, [r5]
 	add	r0, sp, #8
 	mov	lr, pc
@@ -205,21 +228,19 @@ resetGame:
 	mov	r1, #10
 	mov	r3, r6
 	mov	r0, r1
-	ldr	r6, .L11+24
+	ldr	r6, .L11+36
 	add	r2, sp, #8
 	mov	lr, pc
 	bx	r6
-	mov	ip, #5
 	mov	r3, #2
-	mov	r1, #31
-	mov	r2, #0
-	mov	r0, #145
-	str	ip, [r4]
+	mov	r1, #145
+	mov	r2, #31
+	mov	r0, #5
 	str	r3, [r4, #8]
 	str	r3, [r4, #12]
-	strh	r1, [r4, #28]	@ movhi
-	str	r2, [r5, #4]
-	str	r0, [r4, #4]
+	stm	r4, {r0, r1}
+	strh	r2, [r4, #28]	@ movhi
+	str	r9, [r5, #4]
 	bl	drawPlayer
 	mov	r1, r8
 	ldr	r2, [r5]
@@ -227,23 +248,26 @@ resetGame:
 	mov	lr, pc
 	bx	r7
 	mov	r1, #10
-	ldr	r3, .L11+28
+	ldr	r3, .L11+40
 	mov	r0, r1
 	add	r2, sp, #20
 	mov	lr, pc
 	bx	r6
-	add	sp, sp, #32
+	add	sp, sp, #36
 	@ sp needed
-	pop	{r4, r5, r6, r7, r8, lr}
+	pop	{r4, r5, r6, r7, r8, r9, lr}
 	bx	lr
 .L12:
 	.align	2
 .L11:
 	.word	player
 	.word	20810
+	.word	drawRectangle
+	.word	fillScreen
+	.word	5605
+	.word	endpoint
 	.word	.LANCHOR0
 	.word	.LC0
-	.word	drawRectangle
 	.word	sprintf
 	.word	drawString
 	.word	32767
