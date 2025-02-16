@@ -46,9 +46,9 @@ initialize:
 	.align	2
 .L4:
 	.word	1027
+	.word	initSound
 	.word	initializePlayer
 	.word	initRain
-	.word	initSound
 	.word	mgba_open
 	.word	drawMap
 	.size	initialize, .-initialize
@@ -268,8 +268,8 @@ main:
 	ldr	r3, .L35+84
 	mov	lr, pc
 	bx	r3
-	ldr	r3, .L35+72
 	mov	r0, #8
+	ldr	r3, .L35+72
 	mov	lr, pc
 	bx	r3
 	ldr	r3, .L35+80
@@ -304,4 +304,5 @@ main:
 	.size	main, .-main
 	.comm	oldButtons,2,2
 	.comm	buttons,2,2
+	.comm	NOTES,2,2
 	.ident	"GCC: (devkitARM release 53) 9.1.0"

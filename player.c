@@ -2,16 +2,20 @@
 #include "map.h"
 #include "gba.h"  
 #include <stdlib.h> 
+#include <stdio.h>
 
 #define PLAYER_SIZE 2
-#define MOVE_DELAY 1  // The higher the number, the slower the movement
+#define MOVE_DELAY 1
 
-int moveCounter = 0;  // Counter to track movement frames
+// Track move frames
+int moveCounter = 0;
 Player player;
+
+// Player score
 int score = 0;
 extern Endpoint endpoint;
 
-// Initialize player at the first checkpoint
+// Initialize player at beginning
 void initializePlayer() {
     player.x = 5;
     player.y = 145;
@@ -21,7 +25,8 @@ void initializePlayer() {
 }
 
 void resetGame() {
-    // Erase the last player position before resetting
+
+    // Erase the last player position and clear rain
     drawRectangle(player.x, player.y, player.width, player.height, RGB(10, 10, 20));
     fillScreen(RGB(10, 10, 20));
     drawRectangle(0, 147, 240, 13, RGB(5, 15, 5));
@@ -30,17 +35,17 @@ void resetGame() {
     // Erase the previous score
     char oldScoreText[10];
     sprintf(oldScoreText, "Score: %d", score);
-    drawString(10, 10, oldScoreText, RGB(10, 10, 20));  // Overwrite score with background color
+    drawString(10, 10, oldScoreText, RGB(10, 10, 20));
 
     // Reset player position
     initializePlayer();  
     
     moveCounter = 0;  
 
-    // Immediately draw the player again
+    // Re-draw the player at beginning
     drawPlayer();
 
-    // Redraw the updated score
+    // Re-draw the updated score
     char newScoreText[10];
     sprintf(newScoreText, "Score: %d", score);
     drawString(10, 10, newScoreText, WHITE);
@@ -48,10 +53,11 @@ void resetGame() {
 
 
 void updatePlayer() {
-    // Erase the previous position by drawing over it with the background color
+
+    // Erase the previous position of player (3 x 9) rectang;e
     drawRectangle(player.x, player.y - 9, player.width + 3, player.height + 9, RGB(10, 10, 20));
 
-    // Only move every MOVE_DELAY frames
+    // Logic to set player movement every MOVE_DELAY frames
     if (moveCounter % MOVE_DELAY == 0) {
         if (BUTTON_HELD(BUTTON_LEFT) && player.x > 1) {
             player.x -= 1;
@@ -67,11 +73,11 @@ void updatePlayer() {
         player.y = SCREENHEIGHT - player.height;
     }
 
-    // Draw new position
+    // Re-draw
     drawPlayer();
 }
 
-// Draws the player
+// Draws the player with pixels
 void drawPlayer() {
 
     setPixel(player.x, player.y, BLACK);

@@ -59,7 +59,7 @@ initRain:
 	sub	r0, r0, r3
 	add	r9, r9, #1
 	add	r0, r0, #1
-	cmp	r9, #20
+	cmp	r9, #100
 	str	r0, [r8, #8]
 	str	r2, [r8, #12]
 	add	r8, r8, #16
@@ -95,7 +95,7 @@ updateRain:
 	bx	r3
 	ldr	r8, .L24+8
 	ldr	r7, .L24+12
-	add	r6, r4, #320
+	add	r6, r4, #1600
 	b	.L10
 .L9:
 	add	r5, r5, #16
@@ -178,7 +178,7 @@ drawRain:
 	mov	r7, #31744
 	ldr	r6, .L35+4
 	sub	sp, sp, #12
-	add	r5, r4, #320
+	add	r5, r4, #1600
 	b	.L28
 .L27:
 	add	r4, r4, #16
@@ -219,42 +219,40 @@ increaseRainFall:
 	@ args = 0, pretend = 0, frame = 0
 	@ frame_needed = 0, uses_anonymous_args = 0
 	push	{r3, r4, r5, r6, r7, r8, r9, r10, fp, lr}
-	ldr	r7, .L46
-	ldr	r8, .L46+4
+	ldr	r7, .L45
 	ldr	r2, [r7]
-	cmp	r2, #9
-	ldr	r2, [r8]
-	addle	r2, r2, #5
-	strle	r2, [r8]
-	cmp	r2, #20
-	movgt	r2, #20
-	strgt	r2, [r8]
-	bgt	.L40
+	add	r2, r2, #5
+	cmp	r2, #100
+	str	r2, [r7]
+	movgt	r2, #100
+	strgt	r2, [r7]
+	bgt	.L39
 	cmp	r2, #0
 	ble	.L37
-.L40:
+.L39:
 	mov	fp, #0
 	mov	r10, #1
-	ldr	r4, .L46+8
-	ldr	r5, .L46+12
-	ldr	r6, .L46+16
-	ldr	r9, .L46+20
-	b	.L42
-.L41:
-	ldr	r2, [r8]
+	ldr	r4, .L45+4
+	ldr	r5, .L45+8
+	ldr	r6, .L45+12
+	ldr	r9, .L45+16
+	ldr	r8, .L45+20
+	b	.L41
+.L40:
+	ldr	r2, [r7]
 	cmp	r2, fp
 	add	r4, r4, #16
 	ble	.L37
-.L42:
+.L41:
 	ldr	r2, [r4, #12]
 	cmp	r2, #0
 	add	fp, fp, #1
-	bne	.L41
+	bne	.L40
 	str	r10, [r4, #12]
 	mov	lr, pc
 	bx	r5
 	smull	r3, ip, r6, r0
-	ldr	r1, [r7]
+	ldr	r1, [r9]
 	smull	r3, r2, r6, r1
 	sub	ip, ip, r0, asr #31
 	add	ip, ip, ip, lsl #1
@@ -265,7 +263,7 @@ increaseRainFall:
 	str	r0, [r4, #8]
 	mov	lr, pc
 	bx	r5
-	smull	r3, r1, r9, r0
+	smull	r3, r1, r8, r0
 	asr	r2, r0, #31
 	rsb	r2, r2, r1, asr #6
 	rsb	r1, r2, r2, lsl #3
@@ -274,7 +272,7 @@ increaseRainFall:
 	str	r2, [r4]
 	mov	lr, pc
 	bx	r5
-	ldr	r1, .L46+24
+	ldr	r1, .L45+24
 	smull	r3, r1, r0, r1
 	asr	r2, r0, #31
 	add	r1, r1, r0
@@ -283,27 +281,27 @@ increaseRainFall:
 	rsb	r2, r2, r1, lsl #3
 	sub	r2, r0, r2
 	str	r2, [r4, #4]
-	ldr	r2, [r8]
+	ldr	r2, [r7]
 	cmp	r2, fp
 	add	r4, r4, #16
-	bgt	.L42
+	bgt	.L41
 .L37:
 	pop	{r3, r4, r5, r6, r7, r8, r9, r10, fp, lr}
 	bx	lr
-.L47:
-	.align	2
 .L46:
-	.word	score
+	.align	2
+.L45:
 	.word	.LANCHOR0
 	.word	rainDrops
 	.word	rand
 	.word	1431655766
+	.word	score
 	.word	1216273925
 	.word	-1307163959
 	.size	increaseRainFall, .-increaseRainFall
 	.global	currentRound
 	.global	currentRainAmount
-	.comm	rainDrops,320,4
+	.comm	rainDrops,1600,4
 	.data
 	.align	2
 	.set	.LANCHOR0,. + 0

@@ -2,6 +2,9 @@
 #include "map.h"
 #include "player.h"
 #include "rain.h"
+#include "print.h"
+#include <stdio.h>
+#include "analogSound.h"
 
 unsigned short buttons;
 unsigned short oldButtons;
@@ -73,14 +76,11 @@ int main() {
     return 0;
 }
 
-
-
-
 void initialize() {
     REG_DISPCTL = MODE(3) | BG_ENABLE(2);
+    initSound();
     initializePlayer();
     initRain();
-    initSound();
     mgba_open();
     drawMap();
 }
@@ -90,12 +90,11 @@ void updateGame() {
     updateRain();
 }
 
-//  Draw only what changed
 void drawGame() {
     drawPlayer();
     drawRain();
 
-    //  Display Score
+    // Display Score
     char scoreText[10];
     sprintf(scoreText, "Score: %d", score);
     drawString(10, 10, scoreText, WHITE);

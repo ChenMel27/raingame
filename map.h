@@ -1,7 +1,7 @@
 #ifndef MAP_H
 #define MAP_H
 
-// Define struct correctly
+// Endpoint
 typedef struct {
     int x;
     int y;

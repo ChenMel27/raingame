@@ -1,8 +1,8 @@
 #include "map.h"
 #include "gba.h"
 
-// Properly initialize the endpoint struct
-Endpoint endpoint = {228, 0, 12, 147};  // Example values
+// Endpoint location
+Endpoint endpoint = {228, 0, 12, 147};
 
 void drawBackground() {
     // Background

@@ -1,8 +1,9 @@
 #ifndef RAIN_H
 #define RAIN_H
-
-#define MAX_RAIN 20
-#define MAX_SPEED 3  // Max rain speed
+// Max rain amount
+#define MAX_RAIN 100
+// Max rain speed
+#define MAX_SPEED 3
 
 typedef struct {
     int x;
@@ -12,11 +13,13 @@ typedef struct {
 } Rain;
 
 extern Rain rainDrops[MAX_RAIN];
-extern int currentRound;  // Tracks which round we're in
+
+// Tracks round
+extern int currentRound;
 
 void initRain();
 void updateRain();
 void drawRain();
-void increaseRainFall();  // Increases rain every round
+void increaseRainFall();
 
 #endif

@@ -3,36 +3,44 @@
 #include <stdlib.h>
 
 Rain rainDrops[MAX_RAIN];
-int currentRainAmount = 10;  // Start with 10 raindrops
-int currentRound = 1;  // Track round (1, 2, or 3)
+
+// 10 raindrops to start with
+int currentRainAmount = 10;
+
+// 1 / 3 rounds
+int currentRound = 1;
 extern int score;
 
 void initRain() {
     for (int i = 0; i < MAX_RAIN; i++) {
-        rainDrops[i].x = rand() % 226;  // Ensures 0 ≤ x ≤ 225
+        // Don't go past endpoint 
+        rainDrops[i].x = rand() % 226;
         rainDrops[i].y = rand() % SCREENHEIGHT;
         rainDrops[i].speed = 1 + (rand() % MAX_SPEED);
-        rainDrops[i].active = (i < currentRainAmount);  // Only some raindrops are active
+
+        // Only activate current rain number of rain 
+        rainDrops[i].active = (i < currentRainAmount);
     }
 }
 
-// Update all rain drops *without erasing individually*
+// Update rain
 void updateRain() {
-    waitForVBlank();  //  Wait before clearing and redrawing the whole layer
+    waitForVBlank();
 
-    // Erase entire previous rain layer at once (minimizes flicker)
+    // Erase previous rain layer
     for (int i = 0; i < MAX_RAIN; i++) {
         if (rainDrops[i].active && rainDrops[i].y < 146) {
             drawRectangle(rainDrops[i].x, rainDrops[i].y, 2, 2, RGB(10, 10, 20));  
         }
     }
 
-    // Move all raindrops down
+    // Controls the movement of the rain down
+    // By incsreasing y by the speed of the active rain
     for (int i = 0; i < MAX_RAIN; i++) {
         if (rainDrops[i].active) {
             rainDrops[i].y += rainDrops[i].speed;
 
-            // If the raindrop goes off-screen, reset it at the top
+            // If the raindrop goes off-screen / maxes out y, reset it
             if (rainDrops[i].y > SCREENHEIGHT - 15) {
                 rainDrops[i].y = 0;
                 rainDrops[i].x = rand() % 226;
@@ -41,7 +49,7 @@ void updateRain() {
     }
 }
 
-// Draws all active raindrops *after updating positions*
+// Draws active raindrops
 void drawRain() {
     for (int i = 0; i < MAX_RAIN; i++) {
         if (rainDrops[i].active) {
@@ -51,19 +59,21 @@ void drawRain() {
 }
 
 void increaseRainFall() {
-    if (score < 10) {  //  Limit rain increase to level 10
-        currentRainAmount += 5;  //  Add more raindrops every level
-    }
+      // Add 5 more raindrops every level
+    currentRainAmount += 5;
+
 
     if (currentRainAmount > MAX_RAIN) {  
         currentRainAmount = MAX_RAIN;  
     }
 
-    //  Increase speed slightly for each level
+    // Increase the speed for each level
     for (int i = 0; i < currentRainAmount; i++) {  
         if (!rainDrops[i].active) {  
             rainDrops[i].active = 1;  
-            rainDrops[i].speed = 1 + (rand() % MAX_SPEED) + (score / 3);  //  Faster rain per level
+
+            // Faster rain per each increased level
+            rainDrops[i].speed = 1 + (rand() % MAX_SPEED) + (score / 3);
             rainDrops[i].x = rand() % 226;  
             rainDrops[i].y = rand() % 23;  
         }

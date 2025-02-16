@@ -3,6 +3,7 @@
         ".fantomasignore": "ignore",
         "stdlib.h": "c",
         "player.h": "c",
-        "logic.h": "c"
+        "logic.h": "c",
+        "stdio.h": "c"
     }
 }

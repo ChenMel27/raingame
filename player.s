@@ -233,12 +233,12 @@ resetGame:
 	mov	lr, pc
 	bx	r6
 	mov	r3, #2
+	mov	r0, #5
 	mov	r1, #145
 	mov	r2, #31
-	mov	r0, #5
+	stm	r4, {r0, r1}
 	str	r3, [r4, #8]
 	str	r3, [r4, #12]
-	stm	r4, {r0, r1}
 	strh	r2, [r4, #28]	@ movhi
 	str	r9, [r5, #4]
 	bl	drawPlayer

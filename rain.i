@@ -9,6 +9,7 @@
 
 
 
+
 typedef struct {
     int x;
     int y;
@@ -16,7 +17,9 @@ typedef struct {
     int active;
 } Rain;
 
-extern Rain rainDrops[20];
+extern Rain rainDrops[100];
+
+
 extern int currentRound;
 
 void initRain();
@@ -25,26 +28,14 @@ void drawRain();
 void increaseRainFall();
 # 2 "rain.c" 2
 # 1 "gba.h" 1
-
-
-
-
-typedef signed char s8;
-typedef unsigned char u8;
-typedef signed short s16;
-typedef unsigned short u16;
-typedef signed int s32;
-typedef unsigned int u32;
-typedef signed long long s64;
-typedef unsigned long long u64;
-# 25 "gba.h"
+# 15 "gba.h"
 extern volatile unsigned short* videoBuffer;
-# 35 "gba.h"
+# 25 "gba.h"
 int collision(int x1, int y1, int width1, int height1, int x2, int y2, int width2, int height2);
 
 
 void waitForVBlank();
-# 55 "gba.h"
+# 45 "gba.h"
 void drawRectangle(int x, int y, int width, int height, volatile unsigned short color);
 void fillScreen(volatile unsigned short color);
 void drawChar(int x, int y, char ch, volatile unsigned short color);
@@ -52,7 +43,7 @@ void drawString(int x, int y, char *str, volatile unsigned short color);
 void drawLine(int x1, int y1, int x2, int y2, unsigned short color);
 void drawHorizontalLine(int x1, int x2, int y, unsigned short color);
 void fillBetweenLines(unsigned short color);
-# 83 "gba.h"
+# 73 "gba.h"
 extern unsigned short oldButtons;
 extern unsigned short buttons;
 
@@ -64,7 +55,7 @@ typedef volatile struct {
     volatile void* dest;
     unsigned int ctrl;
 } DMAChannel;
-# 123 "gba.h"
+# 113 "gba.h"
 void DMANow(int channel, volatile void* src, volatile void* dest, unsigned int ctrl);
 # 3 "rain.c" 2
 # 1 "/opt/devkitpro/devkitARM/arm-none-eabi/include/stdlib.h" 1 3
@@ -879,16 +870,23 @@ extern long double strtold (const char *restrict, char **restrict);
 
 
 # 5 "rain.c"
-Rain rainDrops[20];
+Rain rainDrops[100];
+
+
 int currentRainAmount = 10;
+
+
 int currentRound = 1;
 extern int score;
 
 void initRain() {
-    for (int i = 0; i < 20; i++) {
+    for (int i = 0; i < 100; i++) {
+
         rainDrops[i].x = rand() % 226;
         rainDrops[i].y = rand() % 160;
         rainDrops[i].speed = 1 + (rand() % 3);
+
+
         rainDrops[i].active = (i < currentRainAmount);
     }
 }
@@ -898,14 +896,15 @@ void updateRain() {
     waitForVBlank();
 
 
-    for (int i = 0; i < 20; i++) {
+    for (int i = 0; i < 100; i++) {
         if (rainDrops[i].active && rainDrops[i].y < 146) {
             drawRectangle(rainDrops[i].x, rainDrops[i].y, 2, 2, (((10) & 31) | ((10) & 31) << 5 | ((20) & 31) << 10));
         }
     }
 
 
-    for (int i = 0; i < 20; i++) {
+
+    for (int i = 0; i < 100; i++) {
         if (rainDrops[i].active) {
             rainDrops[i].y += rainDrops[i].speed;
 
@@ -920,7 +919,7 @@ void updateRain() {
 
 
 void drawRain() {
-    for (int i = 0; i < 20; i++) {
+    for (int i = 0; i < 100; i++) {
         if (rainDrops[i].active) {
             drawRectangle(rainDrops[i].x, rainDrops[i].y, 2, 2, (((0) & 31) | ((0) & 31) << 5 | ((31) & 31) << 10));
         }
@@ -928,18 +927,20 @@ void drawRain() {
 }
 
 void increaseRainFall() {
-    if (score < 10) {
-        currentRainAmount += 5;
-    }
 
-    if (currentRainAmount > 20) {
-        currentRainAmount = 20;
+    currentRainAmount += 5;
+
+
+    if (currentRainAmount > 100) {
+        currentRainAmount = 100;
     }
 
 
     for (int i = 0; i < currentRainAmount; i++) {
         if (!rainDrops[i].active) {
             rainDrops[i].active = 1;
+
+
             rainDrops[i].speed = 1 + (rand() % 3) + (score / 3);
             rainDrops[i].x = rand() % 226;
             rainDrops[i].y = rand() % 23;

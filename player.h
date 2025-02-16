@@ -17,7 +17,9 @@ extern int score;
 extern int currentRainAmount;
 extern int level;
 
-void initPlayer();
+void initializePlayer();
 void updatePlayer();
+void drawPlayer();
+void resetGame();
 
 #endif
