@@ -79,7 +79,6 @@ void updatePlayer() {
 
 // Draws the player with pixels
 void drawPlayer() {
-
     setPixel(player.x, player.y, BLACK);
     setPixel(player.x + 2, player.y, BLACK);
     setPixel(player.x + 2, player.y - 1, RGB(25, 22, 17));
