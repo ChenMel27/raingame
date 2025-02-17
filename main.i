@@ -1268,66 +1268,82 @@ unsigned short buttons;
 unsigned short oldButtons;
 extern Endpoint endpoint;
 
+typedef enum { START, GAME, PAUSE, LOSE } GameState;
+GameState state;
+
+
 void initialize();
 void updateGame();
 void drawGame();
 void resetGame();
 void increaseRainFall();
+void goToStart();
+void goToGame();
+void goToPause();
+void goToLose();
+void updateState();
 
 int main() {
     initialize();
+    state = START;
+    goToStart();
 
     while (1) {
         oldButtons = buttons;
         buttons = (*(volatile unsigned short *)0x04000130);
 
-        updateGame();
-        waitForVBlank();
-        drawGame();
+        updateState();
+
+        if (state == GAME) {
+            updateGame();
+            waitForVBlank();
+            drawGame();
 
 
-        if (collision(player.x, player.y, player.width + 2, player.height, endpoint.x, endpoint.y, endpoint.width, endpoint.height)) {
-
-
-            char oldScoreText[10];
-            sprintf(oldScoreText, "Score: %d", score);
-            drawString(10, 10, oldScoreText, (((10) & 31) | ((10) & 31) << 5 | ((20) & 31) << 10));
-            score++;
-
-
-            increaseRainFall();
-
-
-            playAnalogSound(8);
-
-
-            resetGame();
-        }
-
-
-        for (int i = 0; i < currentRainAmount; i++) {
-            if (rainDrops[i].active &&
-                collision(player.x, player.y - 11, player.width + 6, player.height + 11, rainDrops[i].x, rainDrops[i].y, 3, 3)) {
+            if (collision(player.x, player.y, player.width + 2, player.height,
+                          endpoint.x, endpoint.y, endpoint.width, endpoint.height)) {
 
 
                 char oldScoreText[10];
                 sprintf(oldScoreText, "Score: %d", score);
                 drawString(10, 10, oldScoreText, (((10) & 31) | ((10) & 31) << 5 | ((20) & 31) << 10));
+                score++;
 
 
-                score = 0;
+                increaseRainFall();
 
 
-                playAnalogSound(6);
-
-
-                currentRainAmount = 10;
-                initRain();
+                playAnalogSound(8);
 
 
                 resetGame();
+            }
 
-                break;
+
+            for (int i = 0; i < currentRainAmount; i++) {
+                if (rainDrops[i].active &&
+                    collision(player.x, player.y - 10, player.width + 3, player.height + 10,
+                              rainDrops[i].x, rainDrops[i].y, 3, 3)) {
+
+
+                    char oldScoreText[10];
+                    sprintf(oldScoreText, "Score: %d", score);
+                    drawString(10, 10, oldScoreText, (((10) & 31) | ((10) & 31) << 5 | ((20) & 31) << 10));
+
+
+                    score = 0;
+
+
+                    playAnalogSound(6);
+
+
+                    currentRainAmount = 10;
+                    initRain();
+
+
+                    goToLose();
+                    break;
+                }
             }
         }
     }
@@ -1356,4 +1372,67 @@ void drawGame() {
     char scoreText[10];
     sprintf(scoreText, "Score: %d", score);
     drawString(10, 10, scoreText, (((31) & 31) | ((31) & 31) << 5 | ((31) & 31) << 10));
+}
+
+void goToStart() {
+    fillScreen((((0) & 31) | ((0) & 31) << 5 | ((0) & 31) << 10));
+    drawRectangle(10, 50, 60, 110, (((15) & 31) | ((15) & 31) << 5 | ((15) & 31) << 10));
+    drawRectangle(90, 50, 60, 110, (((15) & 31) | ((15) & 31) << 5 | ((15) & 31) << 10));
+    drawRectangle(170, 50, 60, 110, (((15) & 31) | ((15) & 31) << 5 | ((15) & 31) << 10));
+    drawRectangle(40, 80, 50, 80, (((1) & 31) | ((1) & 31) << 5 | ((10) & 31) << 10));
+    drawRectangle(120, 80, 50, 80, (((1) & 31) | ((1) & 31) << 5 | ((10) & 31) << 10));
+    drawRectangle(200, 80, 50, 80, (((1) & 31) | ((1) & 31) << 5 | ((10) & 31) << 10));
+
+
+    drawString(65, 10, "Welcome to Seattle", (((31) & 31) | ((31) & 31) << 5 | ((31) & 31) << 10));
+    drawString(60, 30, "Press START to Begin", (((31) & 31) | ((31) & 31) << 5 | ((31) & 31) << 10));
+    state = START;
+}
+
+void goToGame() {
+    fillScreen((((0) & 31) | ((0) & 31) << 5 | ((31) & 31) << 10));
+    initialize();
+    state = GAME;
+}
+
+void goToPause() {
+    fillScreen((((15) & 31) | ((15) & 31) << 5 | ((15) & 31) << 10));
+    drawString(100, 80, "Paused - Press START", (((31) & 31) | ((31) & 31) << 5 | ((31) & 31) << 10));
+    state = PAUSE;
+}
+
+void goToLose() {
+    fillScreen((((31) & 31) | ((0) & 31) << 5 | ((0) & 31) << 10));
+    drawString(65, 30, "You got rained on?", (((31) & 31) | ((31) & 31) << 5 | ((31) & 31) << 10));
+    drawString(40, 45, "Are you even from Seattle?", (((31) & 31) | ((31) & 31) << 5 | ((31) & 31) << 10));
+    drawString(45, 60, "Press START to play again!", (((31) & 31) | ((31) & 31) << 5 | ((31) & 31) << 10));
+    state = LOSE;
+}
+
+void updateState() {
+    switch (state) {
+        case START:
+            if ((!(~(oldButtons) & ((1<<3))) && (~(buttons) & ((1<<3))))) {
+                goToGame();
+            }
+            break;
+
+        case GAME:
+            if ((!(~(oldButtons) & ((1<<2))) && (~(buttons) & ((1<<2))))) {
+                goToPause();
+            }
+            break;
+
+        case PAUSE:
+            if ((!(~(oldButtons) & ((1<<3))) && (~(buttons) & ((1<<3))))) {
+                goToGame();
+            }
+            break;
+
+        case LOSE:
+            if ((!(~(oldButtons) & ((1<<3))) && (~(buttons) & ((1<<3))))) {
+                goToStart();
+            }
+            break;
+    }
 }
