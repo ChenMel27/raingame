@@ -3,16 +3,17 @@
 #include "player.h"
 #include "rain.h"
 #include "print.h"
+#include "art.h"
 #include <stdio.h>
 #include "analogSound.h"
 
 unsigned short buttons;
 unsigned short oldButtons;
 extern Endpoint endpoint;
-// Define game states here
+
+// Game states
 typedef enum { START, GAME, PAUSE, LOSE } GameState;
 GameState state;
-
 
 void initialize();
 void updateGame();
@@ -117,14 +118,9 @@ void drawGame() {
 }
 
 void goToStart() {
-    fillScreen(BLACK);
-    drawRectangle(10, 50, 60, 110, GRAY);
-    drawRectangle(90, 50, 60, 110, GRAY);
-    drawRectangle(170, 50, 60, 110, GRAY);
-    drawRectangle(40, 80, 50, 80, RGB(1, 1, 10));
-    drawRectangle(120, 80, 50, 80, RGB(1, 1, 10));
-    drawRectangle(200, 80, 50, 80, RGB(1, 1, 10));
-
+    drawSeattleBG();
+    drawPlayerBG();
+    drawUmbrellaBG();
 
     drawString(65, 10, "Welcome to Seattle", WHITE);
     drawString(60, 30, "Press START to Begin", WHITE);
@@ -158,19 +154,16 @@ void updateState() {
                 goToGame();
             }
             break;
-
         case GAME:
             if (BUTTON_PRESSED(BUTTON_SELECT)) {
                 goToPause();
             }
             break;
-
         case PAUSE:
             if (BUTTON_PRESSED(BUTTON_START)) {
                 goToGame();
             }
             break;
-
         case LOSE:
             if (BUTTON_PRESSED(BUTTON_START)) {
                 goToStart();

@@ -306,6 +306,14 @@ void mgba_break(void);
 uint8_t mgba_open(void);
 void mgba_close(void);
 # 6 "main.c" 2
+# 1 "art.h" 1
+
+
+
+void drawSeattleBG();
+void drawPlayerBG();
+void drawUmbrellaBG();
+# 7 "main.c" 2
 # 1 "/opt/devkitpro/devkitARM/arm-none-eabi/include/stdio.h" 1 3
 # 29 "/opt/devkitpro/devkitARM/arm-none-eabi/include/stdio.h" 3
 # 1 "/opt/devkitpro/devkitARM/arm-none-eabi/include/_ansi.h" 1 3
@@ -1161,7 +1169,7 @@ _putchar_unlocked(int _c)
 }
 # 797 "/opt/devkitpro/devkitARM/arm-none-eabi/include/stdio.h" 3
 
-# 7 "main.c" 2
+# 8 "main.c" 2
 # 1 "analogSound.h" 1
 
 
@@ -1262,7 +1270,7 @@ void playDrumSound(u8 r, u8 s, u8 b, u8 length, u8 steptime);
 void playNoteWithDuration(NoteWithDuration *n, u8 duty);
 void playChannel1(u16 note, u8 length, u8 sweepShift, u8 sweepTime, u8 sweepDir, u8 envStepTime, u8 envDir, u8 duty);
 void playAnalogSound(u16 sound);
-# 8 "main.c" 2
+# 9 "main.c" 2
 
 unsigned short buttons;
 unsigned short oldButtons;
@@ -1375,14 +1383,9 @@ void drawGame() {
 }
 
 void goToStart() {
-    fillScreen((((0) & 31) | ((0) & 31) << 5 | ((0) & 31) << 10));
-    drawRectangle(10, 50, 60, 110, (((15) & 31) | ((15) & 31) << 5 | ((15) & 31) << 10));
-    drawRectangle(90, 50, 60, 110, (((15) & 31) | ((15) & 31) << 5 | ((15) & 31) << 10));
-    drawRectangle(170, 50, 60, 110, (((15) & 31) | ((15) & 31) << 5 | ((15) & 31) << 10));
-    drawRectangle(40, 80, 50, 80, (((1) & 31) | ((1) & 31) << 5 | ((10) & 31) << 10));
-    drawRectangle(120, 80, 50, 80, (((1) & 31) | ((1) & 31) << 5 | ((10) & 31) << 10));
-    drawRectangle(200, 80, 50, 80, (((1) & 31) | ((1) & 31) << 5 | ((10) & 31) << 10));
-
+    drawSeattleBG();
+    drawPlayerBG();
+    drawUmbrellaBG();
 
     drawString(65, 10, "Welcome to Seattle", (((31) & 31) | ((31) & 31) << 5 | ((31) & 31) << 10));
     drawString(60, 30, "Press START to Begin", (((31) & 31) | ((31) & 31) << 5 | ((31) & 31) << 10));

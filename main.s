@@ -148,85 +148,41 @@ goToStart:
 	@ args = 0, pretend = 0, frame = 0
 	@ frame_needed = 0, uses_anonymous_args = 0
 	push	{r4, r5, r6, lr}
-	ldr	r5, .L16
-	sub	sp, sp, #8
-	mov	r0, #0
-	ldr	r3, .L16+4
+	ldr	r3, .L16
 	mov	lr, pc
 	bx	r3
-	ldr	r4, .L16+8
-	str	r5, [sp]
-	mov	r3, #110
-	mov	r2, #60
-	mov	r1, #50
-	mov	r0, #10
+	ldr	r5, .L16+4
+	ldr	r3, .L16+8
 	mov	lr, pc
-	bx	r4
-	str	r5, [sp]
-	mov	r3, #110
-	mov	r2, #60
-	mov	r1, #50
-	mov	r0, #90
+	bx	r3
+	ldr	r3, .L16+12
 	mov	lr, pc
-	bx	r4
-	str	r5, [sp]
-	mov	r3, #110
-	mov	r2, #60
-	mov	r1, #50
-	mov	r0, #170
-	mov	lr, pc
-	bx	r4
-	mov	r3, #80
-	ldr	r5, .L16+12
-	mov	r1, r3
-	mov	r2, #50
-	mov	r0, #40
-	str	r5, [sp]
-	mov	lr, pc
-	bx	r4
-	mov	r3, #80
-	mov	r2, #50
-	mov	r1, r3
-	mov	r0, #120
-	str	r5, [sp]
-	mov	lr, pc
-	bx	r4
-	mov	r3, #80
-	ldr	r6, .L16+16
-	mov	r1, r3
-	mov	r2, #50
-	mov	r0, #200
-	str	r5, [sp]
-	mov	lr, pc
-	bx	r4
-	mov	r3, r6
-	ldr	r4, .L16+20
+	bx	r3
+	ldr	r4, .L16+16
+	mov	r3, r5
 	mov	r1, #10
 	mov	r0, #65
-	ldr	r2, .L16+24
+	ldr	r2, .L16+20
 	mov	lr, pc
 	bx	r4
-	mov	r3, r6
+	mov	r3, r5
+	ldr	r2, .L16+24
 	mov	r1, #30
 	mov	r0, #60
-	ldr	r2, .L16+28
 	mov	lr, pc
 	bx	r4
 	mov	r2, #0
-	ldr	r3, .L16+32
+	ldr	r3, .L16+28
 	strb	r2, [r3]
-	add	sp, sp, #8
-	@ sp needed
 	pop	{r4, r5, r6, lr}
 	bx	lr
 .L17:
 	.align	2
 .L16:
-	.word	15855
-	.word	fillScreen
-	.word	drawRectangle
-	.word	10273
+	.word	drawSeattleBG
 	.word	32767
+	.word	drawPlayerBG
+	.word	drawUmbrellaBG
 	.word	drawString
 	.word	.LC1
 	.word	.LC2
