@@ -1276,9 +1276,9 @@ unsigned short buttons;
 unsigned short oldButtons;
 extern Endpoint endpoint;
 
+
 typedef enum { START, GAME, PAUSE, LOSE } GameState;
 GameState state;
-
 
 void initialize();
 void updateGame();
@@ -1400,7 +1400,7 @@ void goToGame() {
 
 void goToPause() {
     fillScreen((((15) & 31) | ((15) & 31) << 5 | ((15) & 31) << 10));
-    drawString(100, 80, "Paused - Press START", (((31) & 31) | ((31) & 31) << 5 | ((31) & 31) << 10));
+    drawString(60, 80, "Paused - Press START", (((31) & 31) | ((31) & 31) << 5 | ((31) & 31) << 10));
     state = PAUSE;
 }
 
@@ -1419,19 +1419,16 @@ void updateState() {
                 goToGame();
             }
             break;
-
         case GAME:
             if ((!(~(oldButtons) & ((1<<2))) && (~(buttons) & ((1<<2))))) {
                 goToPause();
             }
             break;
-
         case PAUSE:
             if ((!(~(oldButtons) & ((1<<3))) && (~(buttons) & ((1<<3))))) {
                 goToGame();
             }
             break;
-
         case LOSE:
             if ((!(~(oldButtons) & ((1<<3))) && (~(buttons) & ((1<<3))))) {
                 goToStart();

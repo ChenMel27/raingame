@@ -1372,7 +1372,6 @@ void updatePlayer() {
 
 
 void drawPlayer() {
-
     (videoBuffer[((player.y) * (240) + (player.x))] = (((0) & 31) | ((0) & 31) << 5 | ((0) & 31) << 10));
     (videoBuffer[((player.y) * (240) + (player.x + 2))] = (((0) & 31) | ((0) & 31) << 5 | ((0) & 31) << 10));
     (videoBuffer[((player.y - 1) * (240) + (player.x + 2))] = (((25) & 31) | ((22) & 31) << 5 | ((17) & 31) << 10));

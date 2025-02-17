@@ -14,8 +14,10 @@
 - **Sound Effects:** Different sounds will play when reaching the endpoint [:)] or getting hit by rain [:(].
 
 
-## Movement
+## Actions
 |   Action    |   Button    |
 |-------------|-------------|
 |  Move Left  |  ←  Left    |
 |  Move Right |  →  Right   |
+|  Start Game |     Start   |
+|  Pause Game |     Select  |

@@ -239,7 +239,7 @@ goToPause:
 	ldr	r3, .L24+12
 	ldr	r2, .L24+16
 	mov	r1, #80
-	mov	r0, #100
+	mov	r0, #60
 	mov	lr, pc
 	bx	r4
 	mov	r2, #2

@@ -135,7 +135,7 @@ void goToGame() {
 
 void goToPause() {
     fillScreen(GRAY);
-    drawString(100, 80, "Paused - Press START", WHITE);
+    drawString(60, 80, "Paused - Press START", WHITE);
     state = PAUSE;
 }
 
