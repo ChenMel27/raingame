@@ -3,6 +3,11 @@
 ## Summary
 **Seattle Rain Dash** is a GBA game that is inspired by my childhood in Seattle, where avoiding the rain [without an umbrella] is our daily challenge!! This game really captures the typical Seattle day of dodging raindrops while trying to reach safety.
 
+## Summary
+**Extra Credit Rationale**
+- Rain amount increases with each level
+- Rain speed increases with each level
+
 ## Gameplay
 - Control player by using **LEFT** and **RIGHT** keys
 - Avoid getting hit by falling raindrops.
